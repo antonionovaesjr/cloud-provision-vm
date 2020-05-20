@@ -21,7 +21,7 @@ Faça as mudanças no install_docker.sh que achar necessário, depois execute
 export AWS_ACCESS_KEY_ID=ABC
 export AWS_SECRET_ACCESS_KEY=DEF
 export AWS_DEFAULT_REGION=pais-regiao-numero
-./packer build cloud-provision-vm/ec2-provision.json
+./packer build cloud-provision-vm/AWS/ec2-provision.json
 ```
 Acompanhe a saida de log
 
