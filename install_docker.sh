@@ -9,3 +9,7 @@ sudo gpasswd -a ubuntu docker
 sudo systemctl restart docker
 sudo systemctl enable docker
 sudo systemctl status docker
+sudo gpasswd -u ubuntu docker
+sudo docker pull alpine
+sudo docker pull httpd
+sudo docker pull mysql
