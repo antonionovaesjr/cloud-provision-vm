@@ -19,7 +19,7 @@
   "provisioners": [
     {
       "type": "shell",
-      "script": "./install_docker.sh"
+      "script": "ls -l && ./install_docker.sh"
     }
   ]
 }
