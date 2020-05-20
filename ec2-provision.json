@@ -21,7 +21,7 @@
       "type": "shell",
       "inline": [
         "sudo git clone https://github.com/antonionovaesjr/cloud-provision-vm.git",
-        "sudo cd cloud-provision-vm",
+        "cd cloud-provision-vm",
         "sudo chmod +x *.sh",
         "sudo ./install_docker.sh"
       ]
