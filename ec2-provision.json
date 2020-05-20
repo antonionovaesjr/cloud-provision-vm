@@ -19,7 +19,12 @@
   "provisioners": [
     {
       "type": "shell",
-      "script": "git clone https://github.com/antonionovaesjr/cloud-provision-vm.git && cd cloud-provision-vm && ls -l && sleep 5 && ./install_docker.sh"
+      "inline": [
+        "sudo git clone https://github.com/antonionovaesjr/cloud-provision-vm.git",
+        "sudo cd cloud-provision-vm",
+        "sudo chmod +x *.sh",
+        "sudo ./install_docker.sh"
+      ]
     }
   ]
 }
