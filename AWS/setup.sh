@@ -10,13 +10,13 @@ sudo apt upgrade --assume-yes
 
 # debconf-set-selections <<< "postfix postfix/mailname string localhost.localhost"
 # debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Local Only'"
-DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes postfix
+#DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes postfix
 
 
-DEBIAN_FRONTEND=noninteractive sudo apt-get install unattended-upgrades fail2ban curl wget debsecan auditd --assume-yes
+DEBIAN_FRONTEND=noninteractive sudo apt-get install unattended-upgrades fail2ban curl wget auditd --assume-yes
 sudo wget https://s3.amazonaws.com/amazoncloudwatch-agent/debian/amd64/latest/amazon-cloudwatch-agent.deb
 sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
-sudo chmod o-x /usr/bin/curl /usr/bin/wget
+sudo chmod o-x /usr/bin/curl /usr/bin/wget /usr/bin/nc /usr/bin/dd /usr/bin/telnet
 
 sudo timedatectl set-timezone America/Sao_Paulo
 
@@ -81,3 +81,23 @@ Unattended-Upgrade::Package-Blacklist {
 //  "libstdc\+\+6$";
 };
 EOF
+
+if [ -e /etc/fail2ban/jail.local ]; then
+    sudo rm -f /etc/fail2ban/jail.local
+fi
+
+cat <<-EOF > /etc/fail2ban/jail.local
+[DEFAULT]
+bantime = 8h
+ignoreip = 127.0.0.1/8 xxx.xxx.xxx.xxx
+ignoreself = true
+
+[sshd]
+enabled = true
+port = 22
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 10
+EOF
+
+sudo systemctl restart fail2ban
