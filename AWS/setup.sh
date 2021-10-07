@@ -46,5 +46,5 @@ sudo mkfs.ext4 -L particao-temp $DEVICE_TO_TMP$PART_DEFAULT
 sudo cp /etc/fstab /etc/fstab.bck
 sudo chmod ugo+rw /etc/fstab
 sudo echo "LABEL=particao-var     /var/log    ext4   defaults 0 0" >> /etc/fstab
-sudo echo "LABEL=pariticao-tmp     /tmp    ext4   defaults 0 0" >> /etc/fstab
+sudo echo "LABEL=pariticao-tmp     /tmp    ext4   defaults,nosuid,noexec,rw 0 0" >> /etc/fstab
 sudo chmod go-w /etc/fstab
