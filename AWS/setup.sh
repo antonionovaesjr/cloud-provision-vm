@@ -8,9 +8,9 @@ sudo apt-get update
 sudo apt upgrade --assume-yes
 
 
-debconf-set-selections <<< "postfix postfix/mailname string localhost"
-debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Local Only'"
-sudo apt-get install --assume-yes postfix
+# debconf-set-selections <<< "postfix postfix/mailname string localhost.localhost"
+# debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Local Only'"
+DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes postfix
 
 
 DEBIAN_FRONTEND=noninteractive sudo apt-get install unattended-upgrades fail2ban curl wget debsecan auditd --assume-yes
