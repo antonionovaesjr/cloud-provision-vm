@@ -121,7 +121,6 @@ if [ -e /etc/audit/rules.d/audit.rules ]; then
     sudo cp $HOME/setup-ami/AWS/audit-rules/*.rules /etc/audit/rules.d/
     sudo chown root:root -R /etc/audit/rules.d
     sudo chmod 640 -R /etc/audit/rules.d
+    sudo systemctl restart auditd
 
 fi
-
-sudo systemctl restart auditd
