@@ -2,7 +2,6 @@
 cd $HOME
 
 export DEBIAN_FRONTEND=noninteractive
-sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Local only'"
 sudo dpkg-reconfigure debconf --default-priority
 
 sudo apt-get update
