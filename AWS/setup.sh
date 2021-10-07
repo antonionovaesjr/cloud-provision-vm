@@ -8,8 +8,8 @@ sudo apt-get update
 sudo apt upgrade --assume-yes
 
 
-sudo debconf-set-selections <<< "postfix postfix/mailname string localhost"
-sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Local Only'"
+debconf-set-selections <<< "postfix postfix/mailname string localhost"
+debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Local Only'"
 sudo apt-get install --assume-yes postfix
 
 
