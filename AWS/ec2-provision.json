@@ -8,12 +8,34 @@
     {
       "access_key": "{{user `aws_access_key`}}",
       "ami_name": "packer-linux-aws-demo-{{timestamp}}",
-      "instance_type": "t2.micro",
+      "instance_type": "t3a.medium",
       "region": "{{user `region`}}",
       "secret_key": "{{user `aws_secret_key`}}",
       "source_ami": "ami-085925f297f89fce1",
       "ssh_username": "ubuntu",
-      "type": "amazon-ebs"
+      "security_group_ids": "sg-0084fc86645cb1736",
+      "subnet_id": "subnet-27b4b109",
+      "type": "amazon-ebs",
+      "launch_block_device_mappings": [
+        {
+          "device_name": "/dev/sda1",
+          "volume_size": 20,
+          "volume_type": "gp2",
+          "delete_on_termination": true
+        },
+        {
+          "device_name": "/dev/sdb1",
+          "volume_size": 20,
+          "volume_type": "gp2",
+          "delete_on_termination": true
+        },
+        {
+          "device_name": "/dev/sdc1",
+          "volume_size": 10,
+          "volume_type": "gp2",
+          "delete_on_termination": true
+        }
+      ]
     }
   ],
   "provisioners": [

@@ -1,15 +1,11 @@
 #!/bin/bash
 sudo apt-get update
-sudo apt-get install apt-transport-https ca-certificates curl software-properties-common -y
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-sudo apt-get update 
-sudo apt-get install docker-ce -y
-sudo gpasswd -a ubuntu docker
-sudo systemctl restart docker
-sudo systemctl enable docker
-sudo systemctl status docker
-sudo gpasswd -a ubuntu docker
-sudo docker pull alpine
-sudo docker pull httpd
-sudo docker pull mysql
+sudo apt-get install apt-transport-https ca-certificates curl software-properties-common debsecan auditd -y
+sudo apt upgrade
+wget https://s3.amazonaws.com/amazoncloudwatch-agent/debian/amd64/latest/amazon-cloudwatch-agent.deb
+sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
+chmod o-x /usr/bin/curl /usr/bin/wget 
+
+sudo timedatectl set-timezone America/Sao_Paulo
+
+
