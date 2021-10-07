@@ -117,8 +117,9 @@ EOF
 
 if [ -e /etc/audit/rules.d/audit.rules ]; then
     rm -f /etc/audit/rules.d/audit.rules
-    cp rules/*.rules /etc/audit/rules.d/
+    cp audit-rules/*.rules /etc/audit/rules.d/
     chow root:root /etc/audit/rules.d/*
     chmod 640 /etc/audit/rules.d/*
+
 fi
 
