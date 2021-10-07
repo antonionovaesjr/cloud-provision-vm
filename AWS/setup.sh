@@ -11,7 +11,7 @@ sudo timedatectl set-timezone America/Sao_Paulo
 
 PART_DEFAULT="p1"
 
-for DEVICE_NAME in `lsblk -l -o NAME|grep nvme[0-9]n[0-9]$`; do 
+for DEVICE_NAME in `sudo lsblk -l -o NAME|grep nvme[0-9]n[0-9]$`; do 
  
     if [ ! -b /dev/$DEVICE_NAME$PART_DEFAULT ]; then
     
@@ -20,6 +20,7 @@ for DEVICE_NAME in `lsblk -l -o NAME|grep nvme[0-9]n[0-9]$`; do
         if [ $(grep var /tmp/lista-particao.conf) -gt 0 ]; then
             echo "/dev/$DEVICE_NAME$PART_DEFAULT:tmp" >> $HOME/lista-particao.conf
         fi
+
     else
     
         echo "/dev/$DEVICE_NAME$VAR_TEMP partição exisite e nenhum ação será feita"
