@@ -1,16 +1,15 @@
 #!/bin/bash -x
 cd $HOME
 
+export DEBIAN_FRONTEND=noninteractive
+sudo dpkg-reconfigure debconf --default-priority
 
 
 sudo apt-get update
 sudo apt upgrade --assume-yes
 
-export DEBIAN_FRONTEND=noninteractive
-sudo dpkg-reconfigure debconf --default-priority
-
 sudo debconf-set-selections <<< "postfix postfix/mailname string 'localhost.localhost'"
-sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Local Only'"
+sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Local only'"
 sudo apt-get update
 DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes postfix
 
