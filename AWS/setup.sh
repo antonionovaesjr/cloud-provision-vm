@@ -6,7 +6,14 @@ sudo dpkg-reconfigure debconf --default-priority
 
 sudo apt-get update
 sudo apt upgrade --assume-yes
-DEBIAN_FRONTEND=noninteractive sudo apt-get install unattended-upgrades curl wget debsecan auditd --assume-yes
+
+
+sudo debconf-set-selections <<< "postfix postfix/mailname string localhost"
+sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Local Only'"
+sudo apt-get install --assume-yes postfix
+
+
+DEBIAN_FRONTEND=noninteractive sudo apt-get install unattended-upgrades fail2ban curl wget debsecan auditd --assume-yes
 sudo wget https://s3.amazonaws.com/amazoncloudwatch-agent/debian/amd64/latest/amazon-cloudwatch-agent.deb
 sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
 sudo chmod o-x /usr/bin/curl /usr/bin/wget
@@ -16,7 +23,9 @@ sudo timedatectl set-timezone America/Sao_Paulo
 
 PART_DEFAULT="p1"
 
-rm -f /tmp/lista-particao.conf
+if [ -e /tmp/lista-particao.conf ]; then
+    rm -f /tmp/lista-particao.conf
+fi
 
 for DEVICE_NAME in `sudo lsblk -l -o NAME|grep nvme[0-9]n[0-9]$`; do
 
