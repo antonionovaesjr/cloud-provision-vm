@@ -59,7 +59,7 @@ sudo mkfs.ext4 -L particao-temp $DEVICE_TO_TMP$PART_DEFAULT
 sudo mkdir -p /var/swap/
 sudo dd if=/dev/zero of=/var/swap/mem01.swap bs=4k count=512000
 sudo chmod 600 /var/swap/mem01.swap
-sudo mkdswap -L swap-mem01 /var/swap/mem01.swap
+sudo mkswap -L swap-mem01 /var/swap/mem01.swap
 sudo swapon /var/swap/mem01.swap
 
 sudo cp /etc/fstab /etc/fstab.bck
