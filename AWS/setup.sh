@@ -6,7 +6,7 @@ sudo dpkg-reconfigure debconf --default-priority
 
 sudo apt-get update
 sudo apt upgrade -y
-DEBIAN_FRONTEND=noninteractive sudo apt-get install apt-transport-https ca-certificates curl wget software-properties-common debsecan auditd -y
+DEBIAN_FRONTEND=noninteractive sudo apt-get install apt-transport-https ca-certificates curl wget debsecan auditd -y
 sudo wget https://s3.amazonaws.com/amazoncloudwatch-agent/debian/amd64/latest/amazon-cloudwatch-agent.deb
 sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
 sudo chmod o-x /usr/bin/curl /usr/bin/wget
