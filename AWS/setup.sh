@@ -66,7 +66,7 @@ sudo cp /etc/fstab /etc/fstab.bck
 sudo chmod ugo+rw /etc/fstab
 sudo echo "LABEL=particao-var     /var/log    ext4   defaults 0 0" >> /etc/fstab
 sudo echo "LABEL=particao-temp     /tmp    ext4   defaults,nosuid,noexec,rw 0 0" >> /etc/fstab
-sudo echo "LABEL=swap-mem01     swap    swap   defaults 0 0" >> /etc/fstab
+sudo echo "/var/swap/mem01.swap     swap    swap   defaults 0 0" >> /etc/fstab
 sudo chmod go-w /etc/fstab
 
 sudo rm -f /etc/apt/apt.conf.d/50unattended-upgrades
@@ -178,7 +178,18 @@ root        soft    nofile          65535
 *           hard    stack           10240
 EOF
 
-sudo cp /home/ubuntu/setup-ami/AWS/audit-rules/*.rules /etc/audit/rules.d/
+sudo cp /home/ubuntu/setup-ami/AWS/audit-rules/10*.rules /etc/audit/rules.d/
 sudo chown root:root -R /etc/audit/rules.d
 sudo chmod 640 -R /etc/audit/rules.d
 sudo systemctl restart auditd
+
+sudo chmod ugo+rw /etc/issue
+sudo chmod ugo+rw /etc/issue.net
+
+sudo echo "None" > /etc/issue
+sudo echo "None" > /etc/issue.net
+
+sudo chmod go-w /etc/issue
+sudo chmod go-w /etc/issue.net
+
+sudo sed "s/smtpd_banner.*/smtpd_banner\ =\ none/g" /etc/postfix/main.cf -i
