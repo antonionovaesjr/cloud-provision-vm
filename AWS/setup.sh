@@ -2,6 +2,8 @@
 cd $HOME
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update
+debconf-set-selections <<< "postfix postfix/mailname string localhost.localhost"
+debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Local only'"
 sudo apt-get install apt-transport-https ca-certificates curl wget software-properties-common debsecan auditd -y
 sudo apt upgrade
 wget https://s3.amazonaws.com/amazoncloudwatch-agent/debian/amd64/latest/amazon-cloudwatch-agent.deb
