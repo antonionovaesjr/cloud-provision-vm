@@ -3,7 +3,7 @@ cd $HOME
 
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update
-DEBIAN_FRONTEND=noninteractive sudo apt-get install apt-transport-https ca-certificates curl wget software-properties-common debsecan auditd -y
+export DEBIAN_FRONTEND=noninteractive sudo apt-get install apt-transport-https ca-certificates curl wget software-properties-common debsecan auditd -y
 sudo apt upgrade -y
 sudo wget https://s3.amazonaws.com/amazoncloudwatch-agent/debian/amd64/latest/amazon-cloudwatch-agent.deb
 sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
@@ -13,16 +13,18 @@ sudo timedatectl set-timezone America/Sao_Paulo
 
 
 PART_DEFAULT="p1"
-rm -f $HOME/lista-particao.conf
+
+rm -f /tmp/lista-particao.conf
+
 for DEVICE_NAME in `sudo lsblk -l -o NAME|grep nvme[0-9]n[0-9]$`; do
 
     if [ ! -b /dev/$DEVICE_NAME$PART_DEFAULT ]; then
 
 
-        if [ $(grep var $HOME/lista-particao.conf|wc -l) -gt 0 ]; then
-            echo "/dev/$DEVICE_NAME:tmp" >> $HOME/lista-particao.conf
+        if [ $(grep var /tmp/lista-particao.conf|wc -l) -gt 0 ]; then
+            echo "/dev/$DEVICE_NAME:tmp" >> /tmp/lista-particao.conf
         else
-            echo "/dev/$DEVICE_NAME:var" > $HOME/lista-particao.conf
+            echo "/dev/$DEVICE_NAME:var" > /tmp/lista-particao.conf
         fi
 
     else
@@ -34,8 +36,8 @@ for DEVICE_NAME in `sudo lsblk -l -o NAME|grep nvme[0-9]n[0-9]$`; do
 done
 
 
-DEVICE_TO_VAR=$(grep var $HOME/lista-particao.conf|cut -d\: -f1)
-DEVICE_TO_TMP=$(grep tmp $HOME/lista-particao.conf|cut -d\: -f1)
+DEVICE_TO_VAR=$(grep var /tmp/lista-particao.conf|cut -d\: -f1)
+DEVICE_TO_TMP=$(grep tmp /tmp/lista-particao.conf|cut -d\: -f1)
 
 sudo parted -a optimal $DEVICE_TO_VAR mklabel msdos -- 'mkpart primary ext4 1 -1'
 sudo parted -a optimal $DEVICE_TO_TMP mklabel msdos -- 'mkpart primary ext4 1 -1'
