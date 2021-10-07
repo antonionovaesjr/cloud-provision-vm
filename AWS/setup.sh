@@ -75,6 +75,8 @@ Unattended-Upgrade::Allowed-Origins {
 Unattended-Upgrade::Package-Blacklist {
   "nginx";
    "tomcat9-";
+   "tomcat8-";
+   "tomcat7-";
 //  "libc6$";
 
     // Special characters need escaping
@@ -103,3 +105,20 @@ maxretry = 10
 EOF
 
 sudo systemctl restart fail2ban
+
+cat <<-EOF > /etc/apt/apt.conf.d/00-apt-invoke-apt.conf
+DPkg::Pre-Invoke {
+        "mount -o remount,defaults /tmp";
+};
+DPkg::Post-Invoke {
+        "mount -o remount,defaults,nosuid,noexec,rw /tmp";
+};
+EOF
+
+if [ -e /etc/audit/rules.d/audit.rules ]; then
+    rm -f /etc/audit/rules.d/audit.rules
+    cp rules/*.rules /etc/audit/rules.d/
+    chow root:root /etc/audit/rules.d/*
+    chmod 640 /etc/audit/rules.d/*
+fi
+
