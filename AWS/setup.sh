@@ -1,5 +1,5 @@
 #!/bin/bash -x
-cd $HOME
+cd /home/ubuntu
 sudo apt-get update
 echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
 sudo apt-get install -y 

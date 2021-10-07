@@ -42,9 +42,9 @@
     {
       "type": "shell",
       "inline": [
-        "sudo git clone https://github.com/antonionovaesjr/cloud-provision-vm.git $HOME/setup-ami",
-        "sudo chmod +x $HOME/setup-ami/AWS/*",
-        "sudo sh $HOME/setup-ami/AWS/setup.sh"
+        "sudo git clone https://github.com/antonionovaesjr/cloud-provision-vm.git /home/ubuntu/setup-ami",
+        "sudo chmod +x /home/ubuntu/setup-ami/AWS/*",
+        "sudo sh /home/ubuntu/setup-ami/AWS/setup.sh"
       ]
     }
   ]
