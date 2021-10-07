@@ -118,7 +118,7 @@ EOF
 if [ -e /etc/audit/rules.d/audit.rules ]; then
 
     sudo rm -f /etc/audit/rules.d/audit.rules
-    sudo cp $HOME/setup-ami/AWS/audit-rules/*.rules /etc/audit/rules.d/
+    sudo cp /home/ubuntu/setup-ami/AWS/audit-rules/*.rules /etc/audit/rules.d/
     sudo chown root:root -R /etc/audit/rules.d
     sudo chmod 640 -R /etc/audit/rules.d
     sudo systemctl restart auditd
