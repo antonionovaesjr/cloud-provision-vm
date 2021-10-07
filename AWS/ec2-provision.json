@@ -7,11 +7,11 @@
   "builders": [
     {
       "access_key": "{{user `aws_access_key`}}",
-      "ami_name": "packer-linux-aws-demo-{{timestamp}}",
+      "ami_name": "techne-template-ubuntu-x86-v{{isotime \"20060102T030405\"}}",
       "instance_type": "t3a.medium",
       "region": "{{user `region`}}",
       "secret_key": "{{user `aws_secret_key`}}",
-      "source_ami": "ami-085925f297f89fce1",
+      "source_ami": "ami-09e67e426f25ce0d7",
       "ssh_username": "ubuntu",
       "security_group_ids": "sg-0084fc86645cb1736",
       "subnet_id": "subnet-27b4b109",
@@ -25,7 +25,7 @@
         },
         {
           "device_name": "/dev/sdb",
-          "volume_size": 20,
+          "volume_size": 10,
           "volume_type": "gp2",
           "delete_on_termination": true
         },
@@ -42,10 +42,11 @@
     {
       "type": "shell",
       "inline": [
-        "sudo git clone https://github.com/antonionovaesjr/cloud-provision-vm.git",
-        "cd cloud-provision-vm/AWS/",
-        "sudo chmod +x *.sh",
-        "sudo ./install_docker.sh"
+        "sudo git clone https://github.com/antonionovaesjr/cloud-provision-vm.git /tmp/setup-ami",
+        "sudo chmod +x /tmp/setup-ami/*.sh",
+        "sudo /tmp/setup-ami/setup.sh",
+        "rm -rf /tmp/setup-ami",
+        "rm -f $HOME/"
       ]
     }
   ]
