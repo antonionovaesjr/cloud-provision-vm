@@ -31,7 +31,7 @@ for DEVICE_NAME in `sudo lsblk -l -o NAME|grep nvme[0-9]n[0-9]$`; do
 
     if [ ! -b /dev/$DEVICE_NAME$PART_DEFAULT ]; then
 
-
+        touch /tmp/lista-particao.conf
         if [ $(grep var /tmp/lista-particao.conf|wc -l) -gt 0 ]; then
             echo "/dev/$DEVICE_NAME:tmp" >> /tmp/lista-particao.conf
         else
@@ -115,9 +115,7 @@ DPkg::Post-Invoke {
 };
 EOF
 
-if [ -e /etc/audit/rules.d/audit.rules ]; then
 
-    sudo rm -f /etc/audit/rules.d/audit.rules
     sudo cp /home/ubuntu/setup-ami/AWS/audit-rules/*.rules /etc/audit/rules.d/
     sudo chown root:root -R /etc/audit/rules.d
     sudo chmod 640 -R /etc/audit/rules.d
