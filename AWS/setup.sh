@@ -86,6 +86,8 @@ if [ -e /etc/fail2ban/jail.local ]; then
     sudo rm -f /etc/fail2ban/jail.local
 fi
 
+touch /etc/fail2ban/jail.local
+
 cat <<-EOF > /etc/fail2ban/jail.local
 [DEFAULT]
 bantime = 8h
