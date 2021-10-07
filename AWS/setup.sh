@@ -13,7 +13,7 @@ sudo apt upgrade --assume-yes
 #DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes postfix
 
 
-DEBIAN_FRONTEND=noninteractive sudo apt-get install unattended-upgrades fail2ban curl wget auditd --assume-yes
+DEBIAN_FRONTEND=noninteractive sudo apt-get install unattended-upgrades fail2ban curl wget auditd rkhunter --assume-yes
 sudo wget https://s3.amazonaws.com/amazoncloudwatch-agent/debian/amd64/latest/amazon-cloudwatch-agent.deb
 sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
 sudo chmod o-x /usr/bin/curl /usr/bin/wget /usr/bin/nc /usr/bin/dd /usr/bin/telnet
@@ -35,7 +35,7 @@ for DEVICE_NAME in `sudo lsblk -l -o NAME|grep nvme[0-9]n[0-9]$`; do
         if [ $(grep var /tmp/lista-particao.conf|wc -l) -gt 0 ]; then
             echo "/dev/$DEVICE_NAME:tmp" >> /tmp/lista-particao.conf
         else
-            echo "/dev/$DEVICE_NAME:var" > /tmp/lista-particao.conf
+            echo "/dev/$DEVICE_NAME:var" >> /tmp/lista-particao.conf
         fi
 
     else
@@ -59,7 +59,7 @@ sudo mkfs.ext4 -L particao-temp $DEVICE_TO_TMP$PART_DEFAULT
 sudo cp /etc/fstab /etc/fstab.bck
 sudo chmod ugo+rw /etc/fstab
 sudo echo "LABEL=particao-var     /var/log    ext4   defaults 0 0" >> /etc/fstab
-sudo echo "LABEL=pariticao-tmp     /tmp    ext4   defaults,nosuid,noexec,rw 0 0" >> /etc/fstab
+sudo echo "LABEL=particao-temp     /tmp    ext4   defaults,nosuid,noexec,rw 0 0" >> /etc/fstab
 sudo chmod go-w /etc/fstab
 
 sudo rm -f /etc/apt/apt.conf.d/50unattended-upgrades
@@ -90,7 +90,7 @@ touch /etc/fail2ban/jail.local
 
 cat <<-EOF > /etc/fail2ban/jail.local
 [DEFAULT]
-bantime = 8h
+bantime = 5m
 ignoreip = 127.0.0.1/8 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16
 ignoreself = true
 
