@@ -1,8 +1,11 @@
 #!/bin/bash -x
 cd $HOME
+sudo apt-get update
+echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
+sudo apt-get install -y 
 
 export DEBIAN_FRONTEND=noninteractive
-sudo apt-get update
+
 DEBIAN_FRONTEND=noninteractive sudo apt isntall dialog apt-utils --assume-yes
 DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes postfix
 
