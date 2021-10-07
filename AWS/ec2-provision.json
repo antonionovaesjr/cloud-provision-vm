@@ -42,11 +42,9 @@
     {
       "type": "shell",
       "inline": [
-        "sudo git clone https://github.com/antonionovaesjr/cloud-provision-vm.git /tmp/setup-ami",
-        "sudo chmod +x /tmp/setup-ami/*.sh",
-        "sudo /tmp/setup-ami/setup.sh",
-        "rm -rf /tmp/setup-ami",
-        "rm -f $HOME/"
+        "sudo git clone https://github.com/antonionovaesjr/cloud-provision-vm.git $HOME/setup-ami",
+        "sudo chmod +x $HOME/setup-ami/*.sh",
+        "sudo $HOME/setup-ami/setup.sh"
       ]
     }
   ]
