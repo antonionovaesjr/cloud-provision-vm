@@ -2,23 +2,17 @@
 cd $HOME
 
 export DEBIAN_FRONTEND=noninteractive
-#sudo dpkg-reconfigure debconf --default-priority
-
-
-# sudo debconf-set-selections <<< "postfix postfix/mailname string 'localhost.localhost'"
-# sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Local only'"
 sudo apt-get update
+DEBIAN_FRONTEND=noninteractive sudo apt isntall dialog apt-utils --assume-yes
 DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes postfix
 
 sudo apt-get update
 DEBIAN_FRONTEND=noninteractive sudo apt upgrade --assume-yes
 
 
-
-
 DEBIAN_FRONTEND=noninteractive sudo apt-get install unattended-upgrades fail2ban curl wget auditd ntp rkhunter --assume-yes
 sudo wget https://s3.amazonaws.com/amazoncloudwatch-agent/debian/amd64/latest/amazon-cloudwatch-agent.deb
-sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
+DEBIAN_FRONTEND=noninteractive sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
 sudo chmod o-x /usr/bin/curl /usr/bin/wget /usr/bin/nc /usr/bin/dd /usr/bin/telnet
 
 sudo timedatectl set-timezone America/Sao_Paulo
