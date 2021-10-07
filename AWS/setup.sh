@@ -11,7 +11,7 @@ sudo dpkg-reconfigure debconf --default-priority
 
 sudo debconf-set-selections <<< "postfix postfix/mailname string 'localhost.localhost'"
 sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Local Only'"
-sudo apt-get updatea
+sudo apt-get update
 DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes postfix
 
 
