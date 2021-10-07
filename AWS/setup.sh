@@ -1,19 +1,20 @@
 #!/bin/bash -x
 cd $HOME
 
-export DEBIAN_FRONTEND=noninteractive
-sudo dpkg-reconfigure debconf --default-priority
+
 
 sudo apt-get update
 sudo apt upgrade --assume-yes
 
+export DEBIAN_FRONTEND=noninteractive
+sudo dpkg-reconfigure debconf --default-priority
 
-# debconf-set-selections <<< "postfix postfix/mailname string localhost.localhost"
-# debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Local Only'"
+sudo debconf-set-selections <<< "postfix postfix/mailname string localhost.localhost"
+sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Local Only'"
 DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes postfix
 
 
-DEBIAN_FRONTEND=noninteractive sudo apt-get install unattended-upgrades fail2ban curl wget auditd rkhunter --assume-yes
+DEBIAN_FRONTEND=noninteractive sudo apt-get install unattended-upgrades fail2ban curl wget auditd ntp rkhunter --assume-yes
 sudo wget https://s3.amazonaws.com/amazoncloudwatch-agent/debian/amd64/latest/amazon-cloudwatch-agent.deb
 sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
 sudo chmod o-x /usr/bin/curl /usr/bin/wget /usr/bin/nc /usr/bin/dd /usr/bin/telnet
