@@ -6,14 +6,14 @@ sudo apt-get install -y
 
 export DEBIAN_FRONTEND=noninteractive
 
-DEBIAN_FRONTEND=noninteractive sudo apt isntall dialog apt-utils --assume-yes
+DEBIAN_FRONTEND=noninteractive sudo apt install dialog apt-utils --assume-yes
 DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes postfix
 
 sudo apt-get update
 DEBIAN_FRONTEND=noninteractive sudo apt upgrade --assume-yes
 
 
-DEBIAN_FRONTEND=noninteractive sudo apt-get install unattended-upgrades fail2ban curl wget auditd ntp rkhunter --assume-yes
+DEBIAN_FRONTEND=noninteractive sudo apt-get install unattended-upgrades fail2ban curl debsecan wget auditd ntp rkhunter --assume-yes
 sudo wget https://s3.amazonaws.com/amazoncloudwatch-agent/debian/amd64/latest/amazon-cloudwatch-agent.deb
 DEBIAN_FRONTEND=noninteractive sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
 sudo chmod o-x /usr/bin/curl /usr/bin/wget /usr/bin/nc /usr/bin/dd /usr/bin/telnet
@@ -117,10 +117,10 @@ EOF
 
 if [ -e /etc/audit/rules.d/audit.rules ]; then
 
-    rm -f /etc/audit/rules.d/audit.rules
-    cp audit-rules/*.rules /etc/audit/rules.d/
-    chown root:root /etc/audit/rules.d/*
-    chmod 640 /etc/audit/rules.d/*
+    sudo rm -f /etc/audit/rules.d/audit.rules
+    sudo cp $HOME/setup-ami/AWS/audit-rules/*.rules /etc/audit/rules.d/
+    sudo chown root:root -R /etc/audit/rules.d
+    sudo chmod 640 -R /etc/audit/rules.d
 
 fi
 
