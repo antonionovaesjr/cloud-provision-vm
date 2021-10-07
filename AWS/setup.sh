@@ -1,5 +1,6 @@
 #!/bin/bash
 cd $HOME
+export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update
 sudo apt-get install apt-transport-https ca-certificates curl wget software-properties-common debsecan auditd -y
 sudo apt upgrade
