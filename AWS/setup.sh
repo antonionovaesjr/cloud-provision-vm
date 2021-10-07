@@ -5,8 +5,8 @@ export DEBIAN_FRONTEND=noninteractive
 sudo dpkg-reconfigure debconf --default-priority
 
 sudo apt-get update
-sudo apt upgrade -y
-DEBIAN_FRONTEND=noninteractive sudo apt-get install apt-transport-https ca-certificates curl wget debsecan auditd -y
+sudo apt upgrade --assume-yes
+DEBIAN_FRONTEND=noninteractive sudo apt-get install unattended-upgrades curl wget debsecan auditd --assume-yes
 sudo wget https://s3.amazonaws.com/amazoncloudwatch-agent/debian/amd64/latest/amazon-cloudwatch-agent.deb
 sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
 sudo chmod o-x /usr/bin/curl /usr/bin/wget
@@ -52,3 +52,23 @@ sudo chmod ugo+rw /etc/fstab
 sudo echo "LABEL=particao-var     /var/log    ext4   defaults 0 0" >> /etc/fstab
 sudo echo "LABEL=pariticao-tmp     /tmp    ext4   defaults,nosuid,noexec,rw 0 0" >> /etc/fstab
 sudo chmod go-w /etc/fstab
+
+sudo rm -f /etc/apt/apt.conf.d/50unattended-upgrades
+
+cat <<-EOF > /etc/apt/apt.conf.d/50unattended-upgrades
+Unattended-Upgrade::Allowed-Origins {
+        "${distro_id}:${distro_codename}-security";
+        "${distro_id}ESMApps:${distro_codename}-apps-security";
+        "${distro_id}ESM:${distro_codename}-infra-security";
+};
+
+// Python regular expressions, matching packages to exclude from upgrading
+Unattended-Upgrade::Package-Blacklist {
+  "nginx";
+   "tomcat9-";
+//  "libc6$";
+
+    // Special characters need escaping
+//  "libstdc\+\+6$";
+};
+EOF
