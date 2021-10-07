@@ -5,13 +5,15 @@ export DEBIAN_FRONTEND=noninteractive
 sudo dpkg-reconfigure debconf --default-priority
 
 
-sudo apt-get update
-sudo apt upgrade --assume-yes
-
 sudo debconf-set-selections <<< "postfix postfix/mailname string 'localhost.localhost'"
 sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Local only'"
 sudo apt-get update
 DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes postfix
+
+sudo apt-get update
+sudo apt upgrade --assume-yes
+
+
 
 
 DEBIAN_FRONTEND=noninteractive sudo apt-get install unattended-upgrades fail2ban curl wget auditd ntp rkhunter --assume-yes
