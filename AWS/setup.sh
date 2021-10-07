@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 cd $HOME
 
 export DEBIAN_FRONTEND=noninteractive
