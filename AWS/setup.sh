@@ -2,7 +2,7 @@
 cd $HOME
 
 export DEBIAN_FRONTEND=noninteractive
-sudo dpkg-reconfigure debconf --default-priority
+#sudo dpkg-reconfigure debconf --default-priority
 
 
 # sudo debconf-set-selections <<< "postfix postfix/mailname string 'localhost.localhost'"
@@ -11,7 +11,7 @@ sudo apt-get update
 DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes postfix
 
 sudo apt-get update
-sudo apt upgrade --assume-yes
+DEBIAN_FRONTEND=noninteractive sudo apt upgrade --assume-yes
 
 
 
